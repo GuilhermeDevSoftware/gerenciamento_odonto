@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include <ctype.h>
 #include<string.h>
 
 #define MAX_CLIENTES 100
@@ -8,12 +7,26 @@
 void menu();
 void cadastro_Cliente();
 
+typedef struct Servico {
+    char nome[50];
+    float valor;
+    char data[10];
+    struct Servico *esquerda;
+    struct Servico *direita;
+} Servico;
+
 typedef struct {
     char nome[50];
     char genero[2];
     char bairro[150];
     char nascimento[10];
+    int id;
 }Pessoa;
+
+typedef struct {
+    Pessoa dado_cliente;
+    Servico *historico_servicos;
+} Cliente;
 
 int contador_cadastro = 0;
 Pessoa clientes[MAX_CLIENTES];
@@ -28,6 +41,7 @@ void cadastro_Cliente(Pessoa *pessoa) {
     getchar();
     printf("\nDigite seu nome: ");
     fgets(pessoa->nome, sizeof(pessoa->nome), stdin);
+    pessoa->nome[strcspn(pessoa->nome, "\n")] = 0;
 
     printf("\nDigite sua data de nascimento: ");
     scanf("%s", pessoa->nascimento);
@@ -35,15 +49,16 @@ void cadastro_Cliente(Pessoa *pessoa) {
     getchar();
     printf("\nDigite sua Rua e numero: ");
     fgets(pessoa->bairro, sizeof(pessoa->bairro), stdin);
+    pessoa->bairro[strcspn(pessoa->bairro, "\n")] = 0;
 
     printf("\nDigite seu genero. [M] Masculino - [F] Feminino: ");
     scanf(" %c", pessoa->genero);
 
+    pessoa->id = contador_cadastro +1;
+
     if (contador_cadastro < MAX_CLIENTES) {
-        strcpy(clientes[contador_cadastro].nome, pessoa->nome);
-        strcpy(clientes[contador_cadastro].genero, pessoa->genero);
-        strcpy(clientes[contador_cadastro].bairro, pessoa->bairro);
-        strcpy(clientes[contador_cadastro].nascimento, pessoa->nascimento);
+        clientes[contador_cadastro].dado_cliente = *pessoa;
+        clientes[contador_cadastro].historico_servicos = NULL;
         contador_cadastro++;
     } else {
         printf("Limite de clientes atingido!\n");
@@ -98,6 +113,7 @@ void menu(){
     printf("[2]: Selecionar cliente.\n");
     printf("[3]: Servicos disponiveis.\n");    
     printf("[4]: Clientes cadastrados: \n");
+    printf("[5]: Sair");
     printf("\n\nInsira sua opcao: ");
     scanf("%d", & escolha);
 
@@ -107,8 +123,7 @@ void menu(){
         cadastro_Cliente(&pessoa);
         break;
     case 2:
-        printf("\nOvo faze");
-        menu();
+        selecionar_cliente();
         break; 
     case 3:
         servicos();
@@ -118,7 +133,12 @@ void menu(){
         exibirClientes();
         menu();
         break;
+    case 5:
+        system("cls");
+        printf("\n\nFECHANDO SISTEMA.");
+        break;
     }
+    
 }
 
 int main(){
