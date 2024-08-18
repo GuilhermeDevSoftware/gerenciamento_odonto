@@ -18,7 +18,7 @@ typedef struct {
     char bairro[150];
     char nascimento[10];
     int id;
-}Pessoa;
+} Pessoa;
 
 typedef struct {
     Pessoa dados_cliente;
@@ -66,6 +66,7 @@ void exibirHistorico(Servico *raiz) {
 
 void cadastro_Cliente(Pessoa *pessoa) {
     int retorno;
+    system("cls");
     printf("=============================================\n");
     printf("--------------- Odonto Risos ----------------\n");
     printf("=============================================\n");
@@ -97,6 +98,9 @@ void cadastro_Cliente(Pessoa *pessoa) {
         printf("Limite de clientes atingido!\n");
     }
 
+    printf("=============================================\n");
+    printf("--------------- Odonto Risos ----------------\n");
+    printf("=============================================\n");
     printf("\nCadastro realizado com sucesso! Seu ID é %d\n", pessoa->id);
     printf("\n\nAperte qualquer tecla para retornar ao MENU.");
     getchar();
@@ -106,6 +110,7 @@ void cadastro_Cliente(Pessoa *pessoa) {
 
 void selecionarCliente() {
     int id;
+    system("cls");
     exibirClientes(); 
     printf("\nSelecione o ID do cliente: ");
     scanf("%d", &id);
@@ -124,6 +129,9 @@ void selecionarCliente() {
         printf("\nID invalido!\n");
     }
 
+    printf("=============================================\n");
+    printf("--------------- Odonto Risos ----------------\n");
+    printf("=============================================\n");
     printf("\n\nAperte qualquer tecla para retornar ao MENU.");
     getchar();
     getchar();
@@ -131,6 +139,10 @@ void selecionarCliente() {
 }
 
 void exibirClientes() {
+    system("cls");
+    printf("=============================================\n");
+    printf("--------------- Odonto Risos ----------------\n");
+    printf("=============================================\n");
     printf("\nClientes cadastrados:\n");
     for (int i = 0; i < contador_cadastro; i++) {
         printf("\nCliente ID %d:", clientes[i].dados_cliente.id);
@@ -143,8 +155,9 @@ void exibirClientes() {
 }
 
 void servicos(int cliente_id){
-    int opcao;
-    char data[10];
+    int opcao; 
+    char data[12];
+    system("cls");
     printf("\nSelecione o servico: \n");
     printf("\n[1] - Limpeza dentaria = R$195,00");
     printf("\n[2] - Cirurgia de remocao dentaria = R$700,00");
@@ -183,6 +196,9 @@ void servicos(int cliente_id){
         gerarNotaFiscal(clientes[cliente_id].historico_servicos, clientes[cliente_id].dados_cliente);
     }
 
+    printf("=============================================\n");
+    printf("--------------- Odonto Risos ----------------\n");
+    printf("=============================================\n");
     printf("\n\nAperte qualquer tecla para retornar ao MENU.");
     getchar();
     getchar();
@@ -209,6 +225,7 @@ void adicionarServicoParaCliente() {
 
 void gerarNotaFiscal(Servico *raiz, Pessoa cliente) {
     float total = 0.0;
+    system("cls");
     printf("\n=============================================\n");
     printf("                 NOTA FISCAL                 \n");
     printf("=============================================\n");
@@ -269,7 +286,11 @@ void menu(){
         break;
     case 5:
         system("cls");
+        printf("=============================================\n");
+        printf("--------------- Odonto Risos ----------------\n");
+        printf("=============================================\n");
         printf("\n\nFECHANDO SISTEMA.");
+        printf("\nVOLTE SEMPRE!!");
         break;
     default:
         printf("\nOpcao invalida!\n");
